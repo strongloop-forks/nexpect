@@ -6,6 +6,7 @@
  */
 
 var assert = require('assert'),
+    debug = require('debug')('test'),
     path = require('path'),
     vows = require('vows'),
     spawn = require('child_process').spawn,
@@ -14,9 +15,11 @@ var assert = require('assert'),
 function assertSpawn (expect) {
   return {
     topic: function () {
+      expect.verbose = debug.enabled;
       expect.run(this.callback)
     },
     "should respond with no error": function (err, stdout) {
+      debug('should respond with no error', err, stdout);
       assert.isTrue(!err);
       assert.isArray(stdout);
     }
